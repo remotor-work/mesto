@@ -2,7 +2,7 @@
 
 Исследователь океана
 
-[Жак-Ив Кусто](https://remotor1.github.io/mesto/)
+[Жак-Ив Кусто](https://remotor-work.github.io/mesto/)
 
 
 
