@@ -7,6 +7,7 @@
     width: 24px;
     height: 19px;
     cursor: pointer;
+    transition: all .5s ease-in-out;
 }
 
 .elements__like:hover {

@@ -1,4 +1,4 @@
-.popup__safe {
+.popup__save {
 	margin: 48px 0 0;
 	border: none;
 	border-radius: 2px;
@@ -13,13 +13,14 @@
 	font-size: 18px;
 	font-weight: 400;
 	font-style: normal;
+	transition: all .5s ease-in-out;
 }
 @media screen and (max-width: 320px) {
-	.popup__safe {
+	.popup__save {
 		line-height: 17px;
 		font-size: 14px;
 	}
 }
-.popup__safe:hover {
+.popup__save:hover {
 	opacity: 0.8;
 }
