@@ -1,10 +1,10 @@
 .profile__edit-button {
-    position: absolute; 
-    /* Я не могу удалить position: absolute т.к. это необходимо для сохранения верстки */
-    /* На макете (figma) текст выравнивается по центру на мобильном разрешении, а кнопка редактирования находиться в смещенном относительно текста состоянии */
-    top: 15px;
-    right: -42px;
-    margin: 0;
+    display: inline;
+    grid-area: edit-button;
+    align-self: center;
+    justify-self: start;
+    transition: opacity .5s ease-in-out;
+    margin: 14px 0 0 18px;
     border: none;
     background-color: #000;
     background-image: url('../../../images/edit_button.svg');
@@ -15,15 +15,17 @@
     padding: 0;
     width: 24px;
     height: 24px;
-    transition: all .5s ease-in-out;
+    line-height: 48px;
+    white-space: nowrap;
 }
 
 @media screen and (max-width: 720px) {
     .profile__edit-button {
-        top: 8px;
-        right: -34px;
         width: 18px;
         height: 18px;
+        margin-top: 9px;
+        margin-left: 10px;
+        align-self: start;
     }
 }
 

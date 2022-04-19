@@ -1,8 +1,10 @@
 .profile__occupation {
+	grid-area: occupation;
+	align-self: start;
 	margin: 0;
-	padding: 0;
+	padding: 8px 0 0;
 	width: 100%;
-	max-width: 330px;
+	max-width: 360px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	line-height: 22px;
@@ -15,8 +17,10 @@
 
 @media screen and (max-width: 720px) {
 	.profile__occupation {
+		padding-top: 7px;
 		text-align: center;
 		line-height: 17px;
 		font-size: 14px;
+		max-width: 220px;
 	}
 }
