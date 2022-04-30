@@ -3,6 +3,10 @@
     padding: 0;
     width: 100%;
     max-width: 880px;
+    display: flex;
+    justify-content: center;
+    outline: 3px dotted red;
+    
 }
 
 @media screen and (max-width: 720px) {
