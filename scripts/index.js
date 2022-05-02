@@ -1,6 +1,8 @@
-const popup = document.querySelector('.popup');
-const popupCloseButton = popup.querySelector('.popup__close');
-const popupForm = popup.querySelector('.popup__form');
+// Переменные редактирования профиля
+const popupProfile = document.querySelector('.popup_profile');
+const popupCloseButton = popupProfile.querySelector('.popup__close');
+const popupProfileForm = popupProfile.querySelector('.popup__form');
+
 
 const profile = document.querySelector('.profile');
 const profileName = profile.querySelector('.profile__name');
@@ -9,7 +11,7 @@ const profileOccupation = profile.querySelector('.profile__occupation');
 const addPopupButton = profile.querySelector('.profile__add-button');
 
 const popupMesto = document.querySelector('.popup-mesto');
-const PopupMestoCloseButton = document.querySelector('.popup-mesto__close');
+const popupMestoCloseButton = document.querySelector('.popup-mesto__close');
 const popupMestoForm = document.querySelector('.popup-mesto__form');
 const popupMestoName = popupMestoForm.querySelector('.popup-mesto__name');
 const popupMestolink = popupMestoForm.querySelector('.popup-mesto__link');
@@ -22,44 +24,33 @@ const popupPictureImg = popupPicture.querySelector('.popup-picture__img');
 const popupPictureName = popupPicture.querySelector('.popup-picture__subtitle');
 const popupPictureClose = popupPicture.querySelector('.popup-picture__close');
 
-const initialCards = [{
-  name: 'Архыз',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-},
-{
-  name: 'Челябинская область',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-},
-{
-  name: 'Иваново',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-},
-{
-  name: 'Камчатка',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-},
-{
-  name: 'Холмогорский район',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-},
-{
-  name: 'Байкал',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-}
-];
+
+const popupProfileName = popupProfile.querySelector('.popup__name');
+const popupProfileJob = popupProfile.querySelector('.popup__job');
 
 function popupOpenToggle() {
-  popup.classList.toggle('popup_opened');
-  popup.querySelector('.popup__name').value = profileName.textContent;
-  popup.querySelector('.popup__job').value = profileOccupation.textContent;
+  popupProfileName.value = profileName.textContent;
+  popupProfileJob.value = profileOccupation.textContent;
+  popupProfile.classList.toggle('popup_opened');
 }
 
-function formSubmitHandler(evt) {
+  function handlerSubmitform(evt) {
   evt.preventDefault();
-  profile.querySelector('.profile__name').textContent = popup.querySelector('.popup__name').value;
-  profile.querySelector('.profile__occupation').textContent = popup.querySelector('.popup__job').value;
-  popup.classList.remove('popup_opened');
+  profile.querySelector('.profile__name').textContent = popupProfile.querySelector('.popup__name').value;
+  profile.querySelector('.profile__occupation').textContent = popupProfile.querySelector('.popup__job').value;
+  popupProfile.classList.remove('popup_opened');
 }
+
+// Сейчас у вас много где дублируется добавление и удаление класса видимости для попапов. Чтобы этого избежать создайте две универсальные функции открытия и закрытия попапов. Они будут принимать через параметр нужный попап и добавлять или удалять класс видимости. Выглядеть они будут примерно так: 
+
+function openPopupA (popup) {
+  popup.classList.add('popup_opened');
+}
+function closePopupA (popup) {
+  console.log(popup);
+  popup.classList.remove('popup-mesto_opened');
+}
+
 
 //Функция открытия и закрытия фомы место
 function popupMestoOpenToggle() {
@@ -68,11 +59,17 @@ function popupMestoOpenToggle() {
 
 //Обрабочик submit mesto form
 const handlerSubmitAddMestoForm = (evt) => {
+  //
+  const veriableA = evt.target.closest('.popup-mesto');
+  //
   evt.preventDefault();
   renderCards(popupMestoName.value, popupMestolink.value)
   popupMestoName.value = '';
   popupMestolink.value = '';
-  popupMestoOpenToggle();
+  //
+  closePopupA(veriableA);
+  //
+  // popupMestoOpenToggle();
 };
 
 //Обработчик кнопки удалить картачку
@@ -126,7 +123,13 @@ initialCards.forEach((card) => {
 
 openPopupButton.addEventListener('click', popupOpenToggle);
 popupCloseButton.addEventListener('click', popupOpenToggle);
-popupForm.addEventListener('submit', formSubmitHandler);
+popupProfileForm.addEventListener('submit', handlerSubmitform);
 popupMestoForm.addEventListener('submit', handlerSubmitAddMestoForm);
 addPopupButton.addEventListener('click', popupMestoOpenToggle);
-PopupMestoCloseButton.addEventListener('click', popupMestoOpenToggle);
+popupMestoCloseButton.addEventListener('click', popupMestoOpenToggle);
+
+
+
+
+
+

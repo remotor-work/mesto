@@ -8,10 +8,6 @@
     grid-template-columns: repeat(auto-fill, minmax(247px, 1fr));
     row-gap: 17px;
 
-
-
-
-
     /* display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
