@@ -36,13 +36,11 @@ const popupPictureClose = popupPicture.querySelector('.popup-picture__close');
 
 // Универсальная функция открытия попап
 function openPopup (popup) {
-  console.log(popup);
   popup.classList.add('popup_opened');
 }
 
 // Универсальная функция закрытия попап
 function closePopup (popup) {
-  console.log('closePopup');
   popup.classList.remove('popup_opened');
 }
 
