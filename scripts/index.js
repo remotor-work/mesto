@@ -1,82 +1,74 @@
-// Переменные редактирования профиля
+// ------------- Элементы dome -------------
+
+// Элементы попап редактирования профиля
 const popupProfile = document.querySelector('.popup_profile');
 const popupCloseButton = popupProfile.querySelector('.popup__close');
 const popupProfileForm = popupProfile.querySelector('.popup__form');
+const popupProfileName = popupProfile.querySelector('.popup__name');
+const popupProfileJob = popupProfile.querySelector('.popup__job');
 
+// Элементы попап добовления мест
+const popupMesto = document.querySelector('.popup_mesto');
+const popupMestoCloseButton = popupMesto.querySelector('.popup__close');
+const popupMestoForm = popupMesto.querySelector('.popup__form');
+const popupMestoName = popupMesto.querySelector('.popup__name');
+const popupMestolink = popupMesto.querySelector('.popup__link');
 
+// Элементы профайла со страницы
 const profile = document.querySelector('.profile');
 const profileName = profile.querySelector('.profile__name');
-const openPopupButton = profile.querySelector('.profile__edit-button');
 const profileOccupation = profile.querySelector('.profile__occupation');
-const addPopupButton = profile.querySelector('.profile__add-button');
+const profileEditButton = profile.querySelector('.profile__edit-button');
 
-const popupMesto = document.querySelector('.popup-mesto');
-const popupMestoCloseButton = document.querySelector('.popup-mesto__close');
-const popupMestoForm = document.querySelector('.popup-mesto__form');
-const popupMestoName = popupMestoForm.querySelector('.popup-mesto__name');
-const popupMestolink = popupMestoForm.querySelector('.popup-mesto__link');
+const profileAddPopupButton = profile.querySelector('.profile__add-button');
 
+// Элементы карточек мест со страницы
 const cardsContainer = document.querySelector('.elements__list');
 const cardTemplate = document.querySelector('#elements__card-template').content.querySelector('.elements__element');
 
+// Элементы попап раскрытие картинки места
 const popupPicture = document.querySelector('.popup-picture');
 const popupPictureImg = popupPicture.querySelector('.popup-picture__img');
 const popupPictureName = popupPicture.querySelector('.popup-picture__subtitle');
 const popupPictureClose = popupPicture.querySelector('.popup-picture__close');
 
+// ------------- Функции обработчики -------------
 
-const popupProfileName = popupProfile.querySelector('.popup__name');
-const popupProfileJob = popupProfile.querySelector('.popup__job');
-
-function popupOpenToggle() {
-  popupProfileName.value = profileName.textContent;
-  popupProfileJob.value = profileOccupation.textContent;
-  popupProfile.classList.toggle('popup_opened');
-}
-
-  function handlerSubmitform(evt) {
-  evt.preventDefault();
-  profile.querySelector('.profile__name').textContent = popupProfile.querySelector('.popup__name').value;
-  profile.querySelector('.profile__occupation').textContent = popupProfile.querySelector('.popup__job').value;
-  popupProfile.classList.remove('popup_opened');
-}
-
-// Сейчас у вас много где дублируется добавление и удаление класса видимости для попапов. Чтобы этого избежать создайте две универсальные функции открытия и закрытия попапов. Они будут принимать через параметр нужный попап и добавлять или удалять класс видимости. Выглядеть они будут примерно так: 
-
-function openPopupA (popup) {
+// Универсальная функция открытия попап
+function openPopup (popup) {
+  console.log(popup);
   popup.classList.add('popup_opened');
 }
-function closePopupA (popup) {
-  console.log(popup);
-  popup.classList.remove('popup-mesto_opened');
+
+// Универсальная функция закрытия попап
+function closePopup (popup) {
+  console.log('closePopup');
+  popup.classList.remove('popup_opened');
 }
 
-
-//Функция открытия и закрытия фомы место
-function popupMestoOpenToggle() {
-  popupMesto.classList.toggle('popup-mesto_opened');
+// Обработчик submit редактирования профиля
+function handlerSubmitProfileForm(evt) {
+  evt.preventDefault();
+  profileName.textContent = popupProfile.querySelector('.popup__name').value;
+  profileOccupation.textContent = popupProfile.querySelector('.popup__job').value;
+  closePopup(popupProfile);
 }
 
-//Обрабочик submit mesto form
+//Обрабочик submit добавление место
 const handlerSubmitAddMestoForm = (evt) => {
-  //
-  const veriableA = evt.target.closest('.popup-mesto');
-  //
   evt.preventDefault();
   renderCards(popupMestoName.value, popupMestolink.value)
   popupMestoName.value = '';
   popupMestolink.value = '';
-  //
-  closePopupA(veriableA);
-  //
-  // popupMestoOpenToggle();
+  closePopup(popupMesto);
 };
 
-//Обработчик кнопки удалить картачку
+// Обработчик кнопки удалить картачку
 const handlerDeletMestoCard = (evt) => {
   evt.target.closest('.elements__element').remove();
 };
-//обработчик лайка
+
+// обработчик лайка
 const handlerLikeMestoCard = (evt) => {
   evt.target.classList.toggle('elements__like_active');
 };
@@ -89,11 +81,9 @@ const HandlerOpenMestoCard = (evt) => {
   popupPicture.classList.toggle('popup-picture_opened');
 };
 
-popupPictureClose.addEventListener('click', function(){
-  popupPicture.classList.toggle('popup-picture_opened');
-});
+// --------------- обработчик массива с картачками ---------------
 
-//Генерация карточки
+// Генерация карточки
 const generateMestoCard = (name, link) => {
   const newMestoCard = cardTemplate.cloneNode(true);
   const newCardName = newMestoCard.querySelector('.elements__name');
@@ -109,26 +99,54 @@ const generateMestoCard = (name, link) => {
   return newMestoCard; 
 }
 
-//Отрисовка карточек 
+// Отрисовка карточек 
 function renderCards(name, link) {
   cardsContainer.prepend(generateMestoCard(name, link))
 }
 
-//обработчик массива
+// Перебор значений массива карточек
 initialCards.forEach((card) => {
   let name = card.name;
   let link = card.link;
   renderCards(name, link);
 });
 
-openPopupButton.addEventListener('click', popupOpenToggle);
-popupCloseButton.addEventListener('click', popupOpenToggle);
-popupProfileForm.addEventListener('submit', handlerSubmitform);
+// --------------- Слушатели ---------------
+
+// Слушатель кнопки редактирования профиля
+profileEditButton.addEventListener('click', function() {
+    popupProfileName.value = profileName.textContent;
+    popupProfileJob.value = profileOccupation.textContent;
+  openPopup(popupProfile);
+});
+
+// Слушатель кнопки закрытия попап редактирования профиля
+popupCloseButton.addEventListener('click', function() {
+  closePopup(popupProfile);
+});
+
+// Слушатель кнопки submit редактирования профиля
+popupProfileForm.addEventListener('submit', handlerSubmitProfileForm);
+
+// Слушатель кнопки добавления места
+profileAddPopupButton.addEventListener('click', function() {
+  openPopup(popupMesto);
+});
+
+// Слушатель кнопки submit добавления места
 popupMestoForm.addEventListener('submit', handlerSubmitAddMestoForm);
-addPopupButton.addEventListener('click', popupMestoOpenToggle);
-popupMestoCloseButton.addEventListener('click', popupMestoOpenToggle);
 
+// Слушатель кнопки закрытия попап добавления места
+popupMestoCloseButton.addEventListener('click', function() {
+  popupMestoName.value = '';
+  popupMestolink.value = '';
+  closePopup(popupMesto);
+});
 
+// Слушатель кнопки закрытия попап большой картинки
+popupPictureClose.addEventListener('click', function(){
+  popupPicture.classList.toggle('popup-picture_opened');
+});
 
 
 
