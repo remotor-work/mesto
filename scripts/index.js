@@ -19,7 +19,6 @@ const profile = document.querySelector('.profile');
 const profileName = profile.querySelector('.profile__name');
 const profileOccupation = profile.querySelector('.profile__occupation');
 const profileEditButton = profile.querySelector('.profile__edit-button');
-
 const profileAddPopupButton = profile.querySelector('.profile__add-button');
 
 // Элементы карточек мест со страницы
@@ -27,10 +26,10 @@ const cardsContainer = document.querySelector('.elements__list');
 const cardTemplate = document.querySelector('#elements__card-template').content.querySelector('.elements__element');
 
 // Элементы попап раскрытие картинки места
-const popupPicture = document.querySelector('.popup-picture');
-const popupPictureImg = popupPicture.querySelector('.popup-picture__img');
-const popupPictureName = popupPicture.querySelector('.popup-picture__subtitle');
-const popupPictureClose = popupPicture.querySelector('.popup-picture__close');
+const popupPicture = document.querySelector('.popup_picture');
+const popupPictureImg = popupPicture.querySelector('.popup__picture-img');
+const popupPictureName = popupPicture.querySelector('.popup__picture-subtitle');
+const popupPictureClose = popupPicture.querySelector('.popup__close');
 
 // ------------- Функции обработчики -------------
 
@@ -47,8 +46,8 @@ function closePopup (popup) {
 // Обработчик submit редактирования профиля
 function handlerSubmitProfileForm(evt) {
   evt.preventDefault();
-  profileName.textContent = popupProfile.querySelector('.popup__name').value;
-  profileOccupation.textContent = popupProfile.querySelector('.popup__job').value;
+  profileName.textContent = popupProfileName.value;
+  profileOccupation.textContent = popupProfileJob.value;
   closePopup(popupProfile);
 }
 
@@ -62,38 +61,45 @@ const handlerSubmitAddMestoForm = (evt) => {
 };
 
 // Обработчик кнопки удалить картачку
-const handlerDeletMestoCard = (evt) => {
-  evt.target.closest('.elements__element').remove();
+const handlerDeletMestoCard = (card) => {
+  card.remove();
 };
 
 // обработчик лайка
-const handlerLikeMestoCard = (evt) => {
-  evt.target.classList.toggle('elements__like_active');
+const handlerLikeMestoCard = (likeButton) => {
+  likeButton.classList.toggle('elements__like_active');
 };
 
-// обработчки открытие попап картинки
-const HandlerOpenMestoCard = (evt) => {
-  popupPictureName.textContent = evt.target.closest('.elements__element').querySelector('.elements__name').textContent;
-  popupPictureImg.src = evt.target.src;
-  popupPictureImg.alt = evt.target.alt;
-  popupPicture.classList.toggle('popup-picture_opened');
+// обработчик клика по картинки для раскрытия картинки
+const handlerClickPicture = (name, link) => {
+  popupPictureName.textContent = name;
+  popupPictureImg.src = link;
+  popupPictureImg.alt = name;
+  openPopup (popupPicture);
 };
 
 // --------------- обработчик массива с картачками ---------------
 
-// Генерация карточки
+// Функция генерации карточки
 const generateMestoCard = (name, link) => {
   const newMestoCard = cardTemplate.cloneNode(true);
   const newCardName = newMestoCard.querySelector('.elements__name');
   const newCardLink = newMestoCard.querySelector('.elements__picture');
   const deleteButton = newMestoCard.querySelector('.elements__delete');
   const likeButton = newMestoCard.querySelector('.elements__like');
-  newCardLink.addEventListener('click', HandlerOpenMestoCard);
+  
   newCardName.textContent = name;
   newCardLink.src = link;
   newCardLink.alt = name;
-  deleteButton.addEventListener('click', handlerDeletMestoCard);
-  likeButton.addEventListener('click', handlerLikeMestoCard);
+  
+  // Слушатель по картинки карточки чтобы раскрыть миниатюру на попап
+  newCardLink.addEventListener('click', () => handlerClickPicture(name, link));
+
+  // Слушатель по урне для удаления карточки
+  deleteButton.addEventListener('click', () => handlerDeletMestoCard(newMestoCard));
+
+  // Слушатель по лайку
+  likeButton.addEventListener('click', () => handlerLikeMestoCard(likeButton));
   return newMestoCard; 
 }
 
@@ -104,8 +110,8 @@ function renderCards(name, link) {
 
 // Перебор значений массива карточек
 initialCards.forEach((card) => {
-  let name = card.name;
-  let link = card.link;
+  const name = card.name;
+  const link = card.link;
   renderCards(name, link);
 });
 
@@ -127,9 +133,7 @@ popupCloseButton.addEventListener('click', function() {
 popupProfileForm.addEventListener('submit', handlerSubmitProfileForm);
 
 // Слушатель кнопки добавления места
-profileAddPopupButton.addEventListener('click', function() {
-  openPopup(popupMesto);
-});
+profileAddPopupButton.addEventListener('click', () => openPopup(popupMesto));
 
 // Слушатель кнопки submit добавления места
 popupMestoForm.addEventListener('submit', handlerSubmitAddMestoForm);
@@ -142,10 +146,4 @@ popupMestoCloseButton.addEventListener('click', function() {
 });
 
 // Слушатель кнопки закрытия попап большой картинки
-popupPictureClose.addEventListener('click', function(){
-  popupPicture.classList.toggle('popup-picture_opened');
-});
-
-
-
-
+popupPictureClose.addEventListener('click', () => closePopup(popupPicture));
