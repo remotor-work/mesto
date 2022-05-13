@@ -1,4 +1,4 @@
-/* .popup__save {
+.popup__button {
 	margin: 48px 0 0;
 	border: none;
 	border-radius: 2px;
@@ -16,11 +16,11 @@
 	transition: all .5s ease-in-out;
 }
 @media screen and (max-width: 320px) {
-	.popup__save {
+	.popup__button {
 		line-height: 17px;
 		font-size: 14px;
 	}
 }
-.popup__save:hover {
+.popup__button:hover {
 	opacity: 0.8;
-} */
+}

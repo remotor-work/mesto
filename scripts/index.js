@@ -33,13 +33,22 @@ const popupPictureClose = popupPicture.querySelector('.popup__close');
 
 // ------------- Функции обработчики -------------
 
+
 // Универсальная функция открытия попап
-function openPopup (popup) {
+function openPopup(popup) {
   popup.classList.add('popup_opened');
+  //Cлушатель escape (ОДНОРАЗОВЫЙ)
+  document.addEventListener('keydown', function (evt) {
+    if (evt.key == 'Escape') {
+      console.log('Был нажат escape');
+      closePopup(popup);
+    }
+  }, { once: true });
 }
 
+
 // Универсальная функция закрытия попап
-function closePopup (popup) {
+function closePopup(popup) {
   popup.classList.remove('popup_opened');
 }
 
@@ -75,7 +84,7 @@ const handlerClickPicture = (name, link) => {
   popupPictureName.textContent = name;
   popupPictureImg.src = link;
   popupPictureImg.alt = name;
-  openPopup (popupPicture);
+  openPopup(popupPicture);
 };
 
 // --------------- обработчик массива с картачками ---------------
@@ -87,11 +96,11 @@ const generateMestoCard = (name, link) => {
   const newCardLink = newMestoCard.querySelector('.elements__picture');
   const deleteButton = newMestoCard.querySelector('.elements__delete');
   const likeButton = newMestoCard.querySelector('.elements__like');
-  
+
   newCardName.textContent = name;
   newCardLink.src = link;
   newCardLink.alt = name;
-  
+
   // Слушатель по картинки карточки чтобы раскрыть миниатюру на попап
   newCardLink.addEventListener('click', () => handlerClickPicture(name, link));
 
@@ -100,7 +109,7 @@ const generateMestoCard = (name, link) => {
 
   // Слушатель по лайку
   likeButton.addEventListener('click', () => handlerLikeMestoCard(likeButton));
-  return newMestoCard; 
+  return newMestoCard;
 }
 
 // Отрисовка карточек 
@@ -118,16 +127,29 @@ initialCards.forEach((card) => {
 // --------------- Слушатели ---------------
 
 // Слушатель кнопки редактирования профиля
-profileEditButton.addEventListener('click', function() {
-    popupProfileName.value = profileName.textContent;
-    popupProfileJob.value = profileOccupation.textContent;
+profileEditButton.addEventListener('click', function () {
+  popupProfileName.value = profileName.textContent;
+  popupProfileJob.value = profileOccupation.textContent;
   openPopup(popupProfile);
 });
 
 // Слушатель кнопки закрытия попап редактирования профиля
-popupCloseButton.addEventListener('click', function() {
+popupCloseButton.addEventListener('click', function () {
   closePopup(popupProfile);
 });
+
+//Функция закрытия попапа по клику на оверлее
+function popupOverlayClickHandler(evt) {
+  if (evt.target === evt.currentTarget) {
+    console.log('Был кник по оверлею');
+    closePopup(evt.target.closest('.popup'));
+  }
+}
+//Слушатели клика по оверлею попапа
+popupProfile.addEventListener('click', popupOverlayClickHandler);
+popupMesto.addEventListener('click', popupOverlayClickHandler);
+popupPicture.addEventListener('click', popupOverlayClickHandler);
+
 
 // Слушатель кнопки submit редактирования профиля
 popupProfileForm.addEventListener('submit', handlerSubmitProfileForm);
@@ -139,7 +161,7 @@ profileAddPopupButton.addEventListener('click', () => openPopup(popupMesto));
 popupMestoForm.addEventListener('submit', handlerSubmitAddMestoForm);
 
 // Слушатель кнопки закрытия попап добавления места
-popupMestoCloseButton.addEventListener('click', function() {
+popupMestoCloseButton.addEventListener('click', function () {
   popupMestoName.value = '';
   popupMestolink.value = '';
   closePopup(popupMesto);
@@ -147,3 +169,5 @@ popupMestoCloseButton.addEventListener('click', function() {
 
 // Слушатель кнопки закрытия попап большой картинки
 popupPictureClose.addEventListener('click', () => closePopup(popupPicture));
+
+
