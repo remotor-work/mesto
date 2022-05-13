@@ -70,10 +70,6 @@ const enableValidation = () => {
     const formList = Array.from(document.querySelectorAll('.popup__form'));
     // Переберём полученную коллекцию
     formList.forEach((formElement) => {
-        // formElement.addEventListener('submit', (evt) => {
-        //   // У каждой формы отменим стандартное поведение
-        //   evt.preventDefault();
-        // });
         // Для каждой формы вызовем функцию setEventListeners,
         // передав ей элемент формы
         setEventListeners(formElement);
@@ -106,7 +102,6 @@ const toggleButtonState = (inputList, buttonElement) => {
         // иначе сделай кнопку активной
         buttonElement.classList.remove('popup__button_disabled');
         buttonElement.removeAttribute('disabled');
-
     }
 };
 

@@ -4,14 +4,14 @@
 const popupProfile = document.querySelector('.popup_profile');
 const popupCloseButton = popupProfile.querySelector('.popup__close');
 const popupProfileForm = popupProfile.querySelector('.popup__form');
-const popupProfileName = popupProfile.querySelector('.popup__name');
+const popupProfileName = popupProfile.querySelector('#popup__profile-name');
 const popupProfileJob = popupProfile.querySelector('.popup__job');
 
 // Элементы попап добовления мест
 const popupMesto = document.querySelector('.popup_mesto');
 const popupMestoCloseButton = popupMesto.querySelector('.popup__close');
 const popupMestoForm = popupMesto.querySelector('.popup__form');
-const popupMestoName = popupMesto.querySelector('.popup__name');
+const popupMestoName = popupMesto.querySelector('#popup__mesto-name');
 const popupMestolink = popupMesto.querySelector('.popup__link');
 
 // Элементы профайла со страницы
