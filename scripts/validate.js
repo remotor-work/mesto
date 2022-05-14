@@ -65,13 +65,11 @@ const setEventListeners = (formElement) => {
 //  Для единообразия поступим с формами аналогично полям внутри них.
 //   Объявим функцию enableValidation, которая найдёт и переберёт все формы на странице:
 const enableValidation = () => {
-    // Найдём все формы с указанным классом в DOM popup__form,
-    // сделаем из них массив методом Array.from
+    // Найдём все формы с указанным классом в DOM popup__form,сделаем из них массив методом Array.from
     const formList = Array.from(document.querySelectorAll('.popup__form'));
     // Переберём полученную коллекцию
     formList.forEach((formElement) => {
-        // Для каждой формы вызовем функцию setEventListeners,
-        // передав ей элемент формы
+        // Для каждой формы вызовем функцию setEventListeners, передав ей элемент формы
         setEventListeners(formElement);
     });
 };

@@ -1,6 +1,7 @@
 // ------------- Элементы dome -------------
 
 // Элементы попап редактирования профиля
+
 const popupProfile = document.querySelector('.popup_profile');
 const popupCloseButton = popupProfile.querySelector('.popup__close');
 const popupProfileForm = popupProfile.querySelector('.popup__form');
@@ -33,22 +34,36 @@ const popupPictureClose = popupPicture.querySelector('.popup__close');
 
 // ------------- Функции обработчики -------------
 
+const addEscapeListener = (evt) => {
+  if (evt.key == 'Escape') {
+    const popupCurrent = document.querySelector(".popup_opened");
+    closePopup(popupCurrent);
+  }
+};
+
 
 // Универсальная функция открытия попап
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-  //Cлушатель escape (ОДНОРАЗОВЫЙ)
-  document.addEventListener('keydown', function (evt) {
-    if (evt.key == 'Escape') {
-      console.log('Был нажат escape');
-      closePopup(popup);
-    }
-  }, { once: true });
+  enableValidation(); //запустить проверку валидации при открытии формы (дизактивация кнопки)
 }
 
 
 // Универсальная функция закрытия попап
 function closePopup(popup) {
+
+  //Очистка полей перед закрытием
+  const popupInputs = popup.querySelectorAll('.popup__input');
+  popupInputs.forEach((input) => {
+    input.value = '';
+  });
+   //Очистка сообщений об ошибках перед закрытием попап
+   const popupInputError = popup.querySelectorAll('.popup__input-error');
+   popupInputError.forEach((input) => {
+     input.textContent = '';
+   });
+
+  document.removeEventListener('keydown', addEscapeListener); // Cлушатель escape
   popup.classList.remove('popup_opened');
 }
 
@@ -141,8 +156,7 @@ popupCloseButton.addEventListener('click', function () {
 //Функция закрытия попапа по клику на оверлее
 function popupOverlayClickHandler(evt) {
   if (evt.target === evt.currentTarget) {
-    console.log('Был кник по оверлею');
-    closePopup(evt.target.closest('.popup'));
+    closePopup(evt.target);
   }
 }
 //Слушатели клика по оверлею попапа

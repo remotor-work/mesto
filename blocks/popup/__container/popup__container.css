@@ -13,7 +13,7 @@
     color: #000;
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 720px) {
     .popup__container {
         padding: 25px 22px 25px;
     }
