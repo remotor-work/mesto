@@ -45,25 +45,13 @@ const addEscapeListener = (evt) => {
 // Универсальная функция открытия попап
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-  enableValidation(); //запустить проверку валидации при открытии формы (дизактивация кнопки)
+  document.addEventListener('keydown', addEscapeListener); // Cлушатель escape
 }
 
 
 // Универсальная функция закрытия попап
 function closePopup(popup) {
-
-  //Очистка полей перед закрытием
-  const popupInputs = popup.querySelectorAll('.popup__input');
-  popupInputs.forEach((input) => {
-    input.value = '';
-  });
-   //Очистка сообщений об ошибках перед закрытием попап
-   const popupInputError = popup.querySelectorAll('.popup__input-error');
-   popupInputError.forEach((input) => {
-     input.textContent = '';
-   });
-
-  document.removeEventListener('keydown', addEscapeListener); // Cлушатель escape
+  document.removeEventListener('keydown', addEscapeListener); // удаляет слушатель escape 
   popup.classList.remove('popup_opened');
 }
 
