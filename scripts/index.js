@@ -147,17 +147,25 @@ function popupOverlayClickHandler(evt) {
     closePopup(evt.target);
   }
 }
+
 //Слушатели клика по оверлею попапа
 popupProfile.addEventListener('click', popupOverlayClickHandler);
 popupMesto.addEventListener('click', popupOverlayClickHandler);
 popupPicture.addEventListener('click', popupOverlayClickHandler);
 
-
 // Слушатель кнопки submit редактирования профиля
 popupProfileForm.addEventListener('submit', handlerSubmitProfileForm);
 
-// Слушатель кнопки добавления места
-profileAddPopupButton.addEventListener('click', () => openPopup(popupMesto));
+//Слушатель кнопки добавления места
+// Найдем элементы для валидатора
+const inputList = Array.from(popupMestoForm.querySelectorAll(validationConfig.inputSelector));
+const buttonElement = popupMestoForm.querySelector(validationConfig.submitButtonSelector);
+
+// Установим слушатель открытия формы новой карточки
+profileAddPopupButton.addEventListener('click', () => {
+  toggleButtonState(inputList, buttonElement, validationConfig);
+  openPopup(popupMesto)
+}); 
 
 // Слушатель кнопки submit добавления места
 popupMestoForm.addEventListener('submit', handlerSubmitAddMestoForm);
