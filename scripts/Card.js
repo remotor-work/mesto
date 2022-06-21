@@ -17,6 +17,7 @@ export class Card {
         this._element = this._getTemplate();                  // Получает шаблон из метода _getTemplate() записывает в внутреннее свойство _element
         this._setEventListeners();                            // Обращаеться к методу _setEventListeners() для установки слушателей
         this._element.querySelector('.elements__picture').src = this._image;  // Записывает в экземляр карточки значения ссылки на фото
+        this._element.querySelector('.elements__picture').alt = this._text;
         this._element.querySelector('.elements__name').textContent = this._text;  // Записывает в экземляр карточки значения для названия
         
         return this._element;                                 // Возвращает экземплыр карточки с заполнеными данными

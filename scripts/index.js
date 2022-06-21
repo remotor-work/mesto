@@ -44,15 +44,17 @@ const validationConfig = {
   errorClass: 'popup__error_visible'
 }
 // Создание экземпляра класса валидации форм
-const editProfileValidator = new FormValidator(validationConfig, popupProfileForm);
-const addCardValidator = new FormValidator(validationConfig, popupMestoForm);
+const profileValidator = new FormValidator(validationConfig, popupProfileForm);
+const cardValidator = new FormValidator(validationConfig, popupMestoForm);
 
 // Вызов метода валидации форм
-editProfileValidator.enableValidation();
-addCardValidator.enableValidation();
+profileValidator.enableValidation();
+cardValidator.enableValidation();
 
 
 // ------------- Функции обработчики -------------
+
+
 
 function addEscapeListener(evt) {
   if (evt.key == 'Escape') {
@@ -81,11 +83,17 @@ function handlerSubmitProfileForm(evt) {
   closePopup(popupProfile);
 }
 
+// Генерируем карточку из полученых данных
+function createCard(item) {
+  const card = new Card(item, '#elements__card-template', handlerClickPicture);
+  return card.generateCard();
+}
+
 //Обрабочик submit добавление место (+)
 const handlerSubmitAddMestoForm = (evt) => {
   evt.preventDefault();
-  renderCards(popupMestoName.value, popupMestolink.value)
-
+  const cardElement = createCard(popupMestoName.value, popupMestolink.value);
+  renderCard(cardElement);
   popupMestoName.value = '';
   popupMestolink.value = '';
   closePopup(popupMesto);
@@ -101,12 +109,10 @@ const handlerClickPicture = (name, link) => {
 };
 
 // Отрисовка карточек 
-function renderCards(name, link) {
-  //cardsContainer.prepend(generateMestoCard(name, link))
-  const card = new Card({ name, link }, '#elements__card-template', handlerClickPicture);
-  const cardElement = card.generateCard();
+function renderCard(cardElement) {
   cardsContainer.prepend(cardElement)
 }
+
 
 // --------------- Слушатели ---------------
 
@@ -139,15 +145,14 @@ popupProfileForm.addEventListener('submit', handlerSubmitProfileForm);
 
 //Слушатель кнопки добавления места
 // Найдем элементы для валидатора
-const inputList = Array.from(popupMestoForm.querySelectorAll(validationConfig.inputSelector));
-const buttonElement = popupMestoForm.querySelector(validationConfig.submitButtonSelector);
+//const inputList = Array.from(popupMestoForm.querySelectorAll(validationConfig.inputSelector));
+//const buttonElement = popupMestoForm.querySelector(validationConfig.submitButtonSelector);
 
 // Установим слушатель открытия формы новой карточки
 profileAddPopupButton.addEventListener('click', () => {
+  //addCardValidator.toggleButtonState();
+  cardValidator.disableSubmitButton();
 
-  //!!!!!!!!!!!!!!!!!!!!!!!!!!
-  addCardValidator.toggleButtonState();
-  //toggleButtonState(inputList, buttonElement, validationConfig);
   openPopup(popupMesto)
 });
 
@@ -164,11 +169,16 @@ popupMestoCloseButton.addEventListener('click', function () {
 // Слушатель кнопки закрытия попап большой картинки
 popupPictureClose.addEventListener('click', () => closePopup(popupPicture));
 
+
+
+
+
+
+
+
 //Перебор значений массива карточек   
 initialCards.forEach((item) => {
-  const card = new Card(item, '#elements__card-template', handlerClickPicture);
-  const cardElement = card.generateCard();
-  cardsContainer.prepend(cardElement)
+  const cardElement = createCard(item);
+  renderCard(cardElement)
 });
-
 

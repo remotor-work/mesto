@@ -6,7 +6,6 @@ export class FormValidator {
         this._buttonElement = this._form.querySelector(this._settings.submitButtonSelector);
     }
 
-
     _showInputError(inputElement, errorMessage) {// Функция, которая добавляет класс с ошибкой
         const { inputErrorClass, errorClass } = this._settings
 
@@ -15,7 +14,6 @@ export class FormValidator {
         errorElement.textContent = errorMessage;                                        // Заменим содержимое span с ошибкой на переданный параметр
         errorElement.classList.add(this._settings.errorClass);                          // Активирует сообщение об ошибке
     };
-
 
     _hideInputError(inputElement) { // Функция, которая удаляет класс с ошибкой
         const { inputErrorClass, errorClass } = this._settings
@@ -41,23 +39,26 @@ export class FormValidator {
         })
     };
 
-    toggleButtonState() {
+    _toggleButtonState() {
         if (this._hasInvalidInput()) {
-            this._buttonElement.classList.add(this._settings.inactiveButtonClass);
-            this._buttonElement.setAttribute('disabled', true);
+            this.disableSubmitButton();
         } else {
             this._buttonElement.classList.remove(this._settings.inactiveButtonClass);
             this._buttonElement.removeAttribute('disabled');
         }
     };
 
+    disableSubmitButton() { //Диактивирует кнопку 
+        this._buttonElement.classList.add(this._settings.inactiveButtonClass);
+        this._buttonElement.setAttribute('disabled', true);
+    }
 
     _setEventListeners() {
-        this.toggleButtonState();
+        this._toggleButtonState();
         this._inputList.forEach((inputElement) => {
             inputElement.addEventListener('input', () => {
                 this._isValid(inputElement);
-                this.toggleButtonState();
+                this._toggleButtonState();
             });
         });
     };
@@ -68,20 +69,4 @@ export class FormValidator {
         });
         this._setEventListeners();
     }
-
-    
-    
 }
-
-
-
-
-
-// const validationConfig = {
-//     formSelector: '.popup__form',
-//     inputSelector: '.popup__input',
-//     submitButtonSelector: '.popup__button',
-//     inactiveButtonClass: 'popup__button_disabled',
-//     inputErrorClass: 'popup__input_type_error',
-//     errorClass: 'popup__error_visible'
-// } 
