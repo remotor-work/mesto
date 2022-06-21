@@ -1,7 +1,9 @@
+import { FormValidator } from './FormValidator.js';
+import { Card } from './Card.js';
+
 // ------------- Элементы dome -------------
 
 // Элементы попап редактирования профиля
-
 const popupProfile = document.querySelector('.popup_profile');
 const popupCloseButton = popupProfile.querySelector('.popup__close');
 const popupProfileForm = popupProfile.querySelector('.popup__form');
@@ -32,15 +34,32 @@ const popupPictureImg = popupPicture.querySelector('.popup__picture-img');
 const popupPictureName = popupPicture.querySelector('.popup__picture-subtitle');
 const popupPictureClose = popupPicture.querySelector('.popup__close');
 
+// Настройки валидации форм
+const validationConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+}
+// Создание экземпляра класса валидации форм
+const editProfileValidator = new FormValidator(validationConfig, popupProfileForm);
+const addCardValidator = new FormValidator(validationConfig, popupMestoForm);
+
+// Вызов метода валидации форм
+editProfileValidator.enableValidation();
+addCardValidator.enableValidation();
+
+
 // ------------- Функции обработчики -------------
 
-const addEscapeListener = (evt) => {
+function addEscapeListener(evt) {
   if (evt.key == 'Escape') {
     const popupCurrent = document.querySelector(".popup_opened");
     closePopup(popupCurrent);
   }
-};
-
+}
 
 // Универсальная функция открытия попап
 function openPopup(popup) {
@@ -48,14 +67,13 @@ function openPopup(popup) {
   document.addEventListener('keydown', addEscapeListener); // Cлушатель escape
 }
 
-
 // Универсальная функция закрытия попап
 function closePopup(popup) {
   document.removeEventListener('keydown', addEscapeListener); // удаляет слушатель escape 
   popup.classList.remove('popup_opened');
 }
 
-// Обработчик submit редактирования профиля
+// Обработчик submit редактирования профиля +
 function handlerSubmitProfileForm(evt) {
   evt.preventDefault();
   profileName.textContent = popupProfileName.value;
@@ -63,24 +81,16 @@ function handlerSubmitProfileForm(evt) {
   closePopup(popupProfile);
 }
 
-//Обрабочик submit добавление место
+//Обрабочик submit добавление место (+)
 const handlerSubmitAddMestoForm = (evt) => {
   evt.preventDefault();
   renderCards(popupMestoName.value, popupMestolink.value)
+
   popupMestoName.value = '';
   popupMestolink.value = '';
   closePopup(popupMesto);
 };
 
-// Обработчик кнопки удалить картачку
-const handlerDeletMestoCard = (card) => {
-  card.remove();
-};
-
-// обработчик лайка
-const handlerLikeMestoCard = (likeButton) => {
-  likeButton.classList.toggle('elements__like_active');
-};
 
 // обработчик клика по картинки для раскрытия картинки
 const handlerClickPicture = (name, link) => {
@@ -90,42 +100,13 @@ const handlerClickPicture = (name, link) => {
   openPopup(popupPicture);
 };
 
-// --------------- обработчик массива с картачками ---------------
-
-// Функция генерации карточки
-const generateMestoCard = (name, link) => {
-  const newMestoCard = cardTemplate.cloneNode(true);
-  const newCardName = newMestoCard.querySelector('.elements__name');
-  const newCardLink = newMestoCard.querySelector('.elements__picture');
-  const deleteButton = newMestoCard.querySelector('.elements__delete');
-  const likeButton = newMestoCard.querySelector('.elements__like');
-
-  newCardName.textContent = name;
-  newCardLink.src = link;
-  newCardLink.alt = name;
-
-  // Слушатель по картинки карточки чтобы раскрыть миниатюру на попап
-  newCardLink.addEventListener('click', () => handlerClickPicture(name, link));
-
-  // Слушатель по урне для удаления карточки
-  deleteButton.addEventListener('click', () => handlerDeletMestoCard(newMestoCard));
-
-  // Слушатель по лайку
-  likeButton.addEventListener('click', () => handlerLikeMestoCard(likeButton));
-  return newMestoCard;
-}
-
 // Отрисовка карточек 
 function renderCards(name, link) {
-  cardsContainer.prepend(generateMestoCard(name, link))
+  //cardsContainer.prepend(generateMestoCard(name, link))
+  const card = new Card({ name, link }, '#elements__card-template', handlerClickPicture);
+  const cardElement = card.generateCard();
+  cardsContainer.prepend(cardElement)
 }
-
-// Перебор значений массива карточек
-initialCards.forEach((card) => {
-  const name = card.name;
-  const link = card.link;
-  renderCards(name, link);
-});
 
 // --------------- Слушатели ---------------
 
@@ -163,9 +144,12 @@ const buttonElement = popupMestoForm.querySelector(validationConfig.submitButton
 
 // Установим слушатель открытия формы новой карточки
 profileAddPopupButton.addEventListener('click', () => {
-  toggleButtonState(inputList, buttonElement, validationConfig);
+
+  //!!!!!!!!!!!!!!!!!!!!!!!!!!
+  addCardValidator.toggleButtonState();
+  //toggleButtonState(inputList, buttonElement, validationConfig);
   openPopup(popupMesto)
-}); 
+});
 
 // Слушатель кнопки submit добавления места
 popupMestoForm.addEventListener('submit', handlerSubmitAddMestoForm);
@@ -179,5 +163,12 @@ popupMestoCloseButton.addEventListener('click', function () {
 
 // Слушатель кнопки закрытия попап большой картинки
 popupPictureClose.addEventListener('click', () => closePopup(popupPicture));
+
+//Перебор значений массива карточек   
+initialCards.forEach((item) => {
+  const card = new Card(item, '#elements__card-template', handlerClickPicture);
+  const cardElement = card.generateCard();
+  cardsContainer.prepend(cardElement)
+});
 
 
