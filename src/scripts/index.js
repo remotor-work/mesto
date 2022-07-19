@@ -1,3 +1,9 @@
+import '../pages/index.css'; // добавьте импорт главного файла стилей !!!!for webpack
+import { initialCards } from "./cards.js";
+
+console.log(initialCards);
+console.log('Hello, World!');
+
 import { FormValidator } from "./FormValidator.js";
 import { Card } from "./Card.js";
 import { Section } from "./Section.js";
