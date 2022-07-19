@@ -1,47 +1,24 @@
 import '../pages/index.css'; // добавьте импорт главного файла стилей !!!!for webpack
 import { initialCards } from "./cards.js";
 
-import { FormValidator } from "./FormValidator.js";
-import { Card } from "./Card.js";
-import { Section } from "./Section.js";
-import { PopupWithImage } from "./PopupWithImage.js";
-import { PopupWithForm } from "./PopupWithForm.js";
-import { UserInfo } from "./UserInfo.js";
+import { FormValidator } from "../components/FormValidator.js";
+import { Card } from "../components/Card.js";
+import { Section } from "../components/Section.js";
+import { PopupWithImage } from "../components/PopupWithImage.js";
+import { PopupWithForm } from "../components/PopupWithForm.js";
+import { UserInfo } from "../components/UserInfo.js";
 
-// ------------- Элементы dome -------------
+import {
+  popupProfileForm,
+  popupProfileName,
+  popupProfileJob,
+  popupMestoForm,
+  profileEditButton,
+  profileAddPopupButton,
+  cardsContainer,
+  validationConfig
+} from "../utils/constants.js"
 
-// Элементы попап редактирования профиля
-const popupProfile = document.querySelector(".popup_profile");
-
-const popupProfileForm = popupProfile.querySelector(".popup__form");
-const popupProfileName = popupProfile.querySelector("#popup__profile-name");
-const popupProfileJob = popupProfile.querySelector(".popup__job");
-
-// Элементы попап добовления мест
-const popupMesto = document.querySelector(".popup_mesto");
-
-const popupMestoForm = popupMesto.querySelector(".popup__form");
-
-// Элементы профайла со страницы
-const profile = document.querySelector(".profile");
-const profileEditButton = profile.querySelector(".profile__edit-button");
-const profileAddPopupButton = profile.querySelector(".profile__add-button");
-
-// Элементы карточек мест со страницы
-const cardsContainer = document.querySelector(".elements__list");
-
-// Элементы попап раскрытие картинки места
-const popupPicture = document.querySelector(".popup_picture");
-
-// Настройки валидации форм
-const validationConfig = {
-  formSelector: ".popup__form",
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__button",
-  inactiveButtonClass: "popup__button_disabled",
-  inputErrorClass: "popup__input_type_error",
-  errorClass: "popup__error_visible",
-};
 // Создание экземпляра класса валидации форм
 const profileValidator = new FormValidator(validationConfig, popupProfileForm);
 const cardValidator = new FormValidator(validationConfig, popupMestoForm);
@@ -55,7 +32,7 @@ function handlerSubmitProfileForm(data) {
   const { name, job } = data;
   userInfo.setUserInfo(name, job);
 
-  editProfilePopup.close();
+  popupEditCard.close();
 }
 
 // Обрабочик submit добавление место (+)
@@ -66,13 +43,16 @@ const handlerSubmitAddMestoForm = (data) => {
   });
 
   section.addItem(cardElement);
-  addCardPopup.close();
+  popupAddCard.close();
 };
 
 // Отрисовка карточек
-const renderCard = (cardElements) => {
-  const cardElement = createCard(cardElements);
-  cardsContainer.prepend(cardElement);
+const renderCard = (cards) => {
+  const cardElement = createCard(cards);
+
+//Используйте, пожалуйста, метод addItem() класса Section для вставки карточки в контейнер
+  section.addItem(cardElement);
+  //cardsContainer.prepend(cardElement);
 };
 
 //Генерируем карточку из полученых данных
@@ -89,14 +69,14 @@ profileEditButton.addEventListener("click", function () {
   popupProfileName.value = name;
   popupProfileJob.value = job;
 
-  editProfilePopup.open();
+  popupEditCard.open();
 });
 
 // Установим слушатель открытия формы новой карточки
 profileAddPopupButton.addEventListener("click", () => {
   cardValidator.disableSubmitButton();
 
-  addCardPopup.open();
+  popupAddCard.open();
 });
 
 const section = new Section(
@@ -107,18 +87,20 @@ const section = new Section(
 const imagePopup = new PopupWithImage(".popup_picture");
 imagePopup.setEventListeners();
 
-const addCardPopup = new PopupWithForm(
+const popupAddCard = new PopupWithForm(
   ".popup_mesto",
   handlerSubmitAddMestoForm
 );
 
-const editProfilePopup = new PopupWithForm(
+const popupEditCard = new PopupWithForm(
   ".popup_profile",
   handlerSubmitProfileForm
 );
 
-addCardPopup.setEventListeners();
-editProfilePopup.setEventListeners();
+popupAddCard.setEventListeners();
+
+
+popupEditCard.setEventListeners();
 
 section.renderItems();
 

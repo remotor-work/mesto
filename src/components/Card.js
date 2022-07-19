@@ -35,15 +35,16 @@ export class Card {
       ); // Слушатель по картинки карточки чтобы раскрыть миниатюру на попап ('.elements__picture');
     this._element
       .querySelector(".elements__delete")
-      .addEventListener("click", () => this._handlerDeletMestoCard()); // Слушатель по урне для удаления карточки ('.elements__picture')
+      .addEventListener("click", () => this._handlerDeleteMestoCard()); // Слушатель по урне для удаления карточки ('.elements__picture')
     this._element
       .querySelector(".elements__like")
       .addEventListener("click", () => this._handlerLikeMestoCard()); // Слушатель по лайку querySelector('.elements__like');
   }
 
-  _handlerDeletMestoCard = () => {
+  _handlerDeleteMestoCard = () => {
     // Обработчик кнопки удалить картачку
     this._element.remove();
+    this._element = null;
   };
 
   _handlerLikeMestoCard = () => {
