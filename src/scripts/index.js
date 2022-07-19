@@ -1,5 +1,5 @@
 import '../pages/index.css'; // добавьте импорт главного файла стилей !!!!for webpack
-import { initialCards } from "./cards.js";
+import { initialCards } from "../utils/cards.js";
 
 import { FormValidator } from "../components/FormValidator.js";
 import { Card } from "../components/Card.js";
