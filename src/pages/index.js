@@ -1,4 +1,4 @@
-import '../pages/index.css'; // добавьте импорт главного файла стилей !!!!for webpack
+import './index.css'; // добавьте импорт главного файла стилей !!!!for webpack
 import { initialCards } from "../utils/cards.js";
 
 import { FormValidator } from "../components/FormValidator.js";
