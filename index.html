@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Место</title>
+<script defer src="main.js"></script><link href="main.css" rel="stylesheet"></head>
+
+<body class="page">
+
+    <header class="header">
+        <img src="3d8293a241b315143f02.svg" alt="Место" class="header__logo">
+        
+    </header>
+
+    <main class="main">
+
+        <section class="profile">
+            <img src="9d6adefb1210b21ebdf8.png" alt="Аватар" class="profile__avatar">
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <p class="profile__occupation">Исследователь океана </p>
+            <button class="profile__edit-button" type="button"></button>
+            <button class="profile__add-button" type="button"></button>
+        </section>
+
+        <section class="elements">
+            <ul class="elements__list">
+            </ul>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p class="footer__copyright">© 2022 Mesto Russia</p>
+    </footer>
+
+    <!-- popup edit profile -->
+
+    <div class="popup popup_profile">
+        <div class="popup__container">
+            <button class="popup__close" type="button"></button>
+            <h2 class="popup__title">Редактировать профиль</h2>
+            <form class="popup__form" novalidate>
+
+                <input id="popup__profile-name" name="name" type="text" class="popup__input" value="" required minlength="2"
+                    maxlength="40">
+                <div class="popup__input-error-wrapper">
+                    <span class="popup__profile-name-error popup__input-error"></span>
+                </div>
+                <input id="popup__job" name="job" type="text" class="popup__job popup__input" value="" required minlength="2"
+                    maxlength="200">
+                <div class="popup__input-error-wrapper">
+                    <span class="popup__job-error popup__input-error"></span>
+                </div>
+
+                <button type="submit" class="popup__button" disabled>Сохранить</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- popup add location -->
+
+    <div class="popup popup_mesto">
+        <div class="popup__container">
+            <button class="popup__close" type="button"></button>
+            <h2 class="popup__title">Новое место</h2>
+            <form class="popup__form" novalidate>
+                <input style="position: relative" type="text" id="popup__mesto-name" name="mesto-name" class="popup__input" value=""
+                    placeholder="Название" required minlength="2" maxlength="30">
+                <div class="popup__input-error-wrapper">
+                    <span class="popup__mesto-name-error popup__input-error"></span>
+                </div>
+
+                <input type="url" id="popup__link" name="link" class="popup__link popup__input" value=""
+                    placeholder="Ссылка на картинку" required>
+                <div class="popup__input-error-wrapper">
+                    <span class="popup__link-error popup__input-error"></span>
+                </div>
+
+
+                <button type="submit" class="popup__button">Создать</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- popup picture -->
+
+    <div class="popup popup_picture">
+        <div class="popup__picture-container">
+            <button class="popup__close" type="button"></button>
+            <img src="b5aec35d291ebb0bd86b.jpg" alt="" class="popup__picture-img">
+            <p class="popup__picture-subtitle"></p>
+        </div>
+    </div>
+
+    <template id="elements__card-template">
+        <li class="elements__element">
+            <button class="elements__delete" type="button"></button>
+            <img src="dfbba08b4d74a1c067f1.png" alt="" class="elements__picture">
+            <div class="elements__wrapper">
+                <p class="elements__name"></p>
+                <button class="elements__like" type="button"></button>
+            </div>
+        </li>
+    </template>
+    
+    <!-- <script src="./scripts/cards.js"></script> -->
+    <!-- <script src="./scripts/validate.js"></script> -->
+    <!-- <script type="module" src="./scripts/index.js"></script> -->
+    
+</body>
+
+</html>
