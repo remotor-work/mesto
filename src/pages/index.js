@@ -50,9 +50,8 @@ const handlerSubmitAddMestoForm = (data) => {
 const renderCard = (cards) => {
   const cardElement = createCard(cards);
 
-//Используйте, пожалуйста, метод addItem() класса Section для вставки карточки в контейнер
+//метод addItem() класса Section для вставки карточки в контейнер
   section.addItem(cardElement);
-  //cardsContainer.prepend(cardElement);
 };
 
 //Генерируем карточку из полученых данных
