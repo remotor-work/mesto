@@ -19,9 +19,10 @@
     <main class="main">
 
         <section class="profile">
+            <button class="profile__edit-avatar" type="button">edit avatar</button>
             <img src="<%=require('./images/avatar.png')%>" alt="Аватар" class="profile__avatar">
-            <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <p class="profile__occupation">Исследователь океана </p>
+            <h1 class="profile__name"></h1>
+            <p class="profile__occupation"></p>
             <button class="profile__edit-button" type="button"></button>
             <button class="profile__add-button" type="button"></button>
         </section>
@@ -86,6 +87,18 @@
         </div>
     </div>
 
+    <div class="popup popup_delete-confirm">
+        <div class="popup__container">
+            <button class="popup__close" type="button"></button>
+            <h2 class="popup__title">are you sure?</h2>
+            <form class="popup__form" novalidate>
+                
+
+                <button type="submit" class="popup__button">Yes</button>
+            </form>
+        </div>
+    </div>
+
     <!-- popup picture -->
 
     <div class="popup popup_picture">
@@ -103,9 +116,29 @@
             <div class="elements__wrapper">
                 <p class="elements__name"></p>
                 <button class="elements__like" type="button"></button>
+                <span style="color: red" class="card__like-count"></span>
             </div>
         </li>
     </template>
+
+    <!-- popup edit avatar -->
+
+    <div class="popup popup_avatar">
+        <div class="popup__container">
+            <button class="popup__close" type="button"></button>
+            <h2 class="popup__title">updateAvatar</h2>
+            <form class="popup__form" novalidate>
+
+                <input type="url" id="popup__link" name="link" class="popup__link popup__input" value=""
+                    placeholder="Avatar link" required>
+                <div class="popup__input-error-wrapper">
+                    <span class="popup__link-error popup__input-error"></span>
+                </div>
+
+                <button type="submit" class="popup__button" disabled>Сохранить</button>
+            </form>
+        </div>
+    </div>
     
     <!-- <script src="./scripts/cards.js"></script> -->
     <!-- <script src="./scripts/validate.js"></script> -->

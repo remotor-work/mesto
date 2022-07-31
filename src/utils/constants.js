@@ -17,6 +17,8 @@ export const profile = document.querySelector(".profile");
 export const profileEditButton = profile.querySelector(".profile__edit-button");
 export const profileAddPopupButton = profile.querySelector(".profile__add-button");
 
+export const profileEditAvatar = profile.querySelector(".profile__edit-avatar"); //avatar
+
 // Элементы карточек мест со страницы
 export const cardsContainer = document.querySelector(".elements__list");
 
