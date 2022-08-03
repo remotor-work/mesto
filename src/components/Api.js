@@ -2,7 +2,6 @@ class Api {
     constructor({ baseUrl, headers }) {
         this._headers = headers
         this._baseUrl = baseUrl
-      // тело конструктора
     }
     
     getProfile() {
@@ -77,20 +76,15 @@ class Api {
         .catch(console.log)
     }
 
-    updateAvatar(id) {
-        return fetch(`https://mesto.${this._baseUrl}/cards/${id}/me/avatar`, {
+    updateAvatar(avatar, id) {
+        return fetch(`https://mesto.${this._baseUrl}/users/me/avatar`, {
             method: 'PATCH',
             headers: this._headers,
-            body: JSON.stringify({
-                avatar
-              })
+            body: JSON.stringify({ avatar })
         })
         .then(res => res.ok ? res.json() : Promise.reject(res.status))
         .catch(console.log)
     }
-  
-    // другие методы работы с API
-    //PATCH https://mesto.nomoreparties.co/v1/cohortId/users/me/avatar 
   }
   
   export const api = new Api({

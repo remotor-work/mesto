@@ -1,0 +1,12 @@
+.profile__avatar-wraper {
+    grid-area: avatar;
+	margin: 0 30px 0 0;
+    position: relative;
+}
+
+@media screen and (max-width: 720px) {
+	.profile__avatar-wraper {
+		margin-right: 0;
+		margin-bottom: 26px;
+	}
+}

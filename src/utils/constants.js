@@ -9,13 +9,13 @@ export const popupProfileJob = popupProfile.querySelector(".popup__job");
 
 // Элементы попап добовления мест
 export const popupMesto = document.querySelector(".popup_mesto");
-
 export const popupMestoForm = popupMesto.querySelector(".popup__form");
 
 // Элементы профайла со страницы
 export const profile = document.querySelector(".profile");
 export const profileEditButton = profile.querySelector(".profile__edit-button");
 export const profileAddPopupButton = profile.querySelector(".profile__add-button");
+
 
 export const profileEditAvatar = profile.querySelector(".profile__edit-avatar"); //avatar
 

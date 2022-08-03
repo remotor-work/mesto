@@ -37,7 +37,7 @@ export class Card {
 
   setLikes(newLikes) {
     this._likes = newLikes;
-    const likeCountElement = this._element.querySelector(".card__like-count");
+    const likeCountElement = this._element.querySelector(".elements__like-count");
     likeCountElement.textContent = this._likes.length;
 
     if(this.isLiked()) {
@@ -90,12 +90,6 @@ export class Card {
       .querySelector(".elements__like")
       .addEventListener("click", () => this._handlerLikeClick(this._id)); // Слушатель по лайку querySelector('.elements__like');
   }
-
-  // _handlerDeleteMestoCard = () => {
-  //   // Обработчик кнопки удалить картачку
-  //   this._element.remove();
-  //   this._element = null;
-  // };
 
   deleteCard = () => {
     // Обработчик кнопки удалить картачку
