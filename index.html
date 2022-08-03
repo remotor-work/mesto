@@ -12,16 +12,22 @@
 <body class="page">
 
     <header class="header">
-        <img src="3d8293a241b315143f02.svg" alt="Место" class="header__logo">
         
+        <img src="3d8293a241b315143f02.svg" alt="Место" class="header__logo">
     </header>
 
     <main class="main">
-
         <section class="profile">
-            <img src="9d6adefb1210b21ebdf8.png" alt="Аватар" class="profile__avatar">
-            <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <p class="profile__occupation">Исследователь океана </p>
+        
+        <div class="profile__avatar-wraper">
+            <img src="" alt="Аватар" class="profile__avatar">
+            <button class="profile__edit-avatar" type="button"></button>
+        </div>
+
+            <!-- <img src="9d6adefb1210b21ebdf8.png" alt="Аватар" class="profile__avatar"> -->
+
+            <h1 class="profile__name"></h1>
+            <p class="profile__occupation"></p>
             <button class="profile__edit-button" type="button"></button>
             <button class="profile__add-button" type="button"></button>
         </section>
@@ -56,7 +62,7 @@
                     <span class="popup__job-error popup__input-error"></span>
                 </div>
 
-                <button type="submit" class="popup__button" disabled>Сохранить</button>
+                <button type="submit" class="popup__button" disabled  id="popup_profile__save-button">Сохранить</button>
             </form>
         </div>
     </div>
@@ -81,7 +87,21 @@
                 </div>
 
 
-                <button type="submit" class="popup__button">Создать</button>
+                <button type="submit" class="popup__button" id="popup__mesto-save-button">Создать</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- popup popup_delete-confirm -->
+    
+    <div class="popup popup_delete-confirm">
+        <div class="popup__container">
+            <button class="popup__close" type="button"></button>
+            <h2 class="popup__title">Вы уверены?</h2>
+            <form class="popup__form" novalidate>
+                
+
+                <button type="submit" class="popup__button">Да</button>
             </form>
         </div>
     </div>
@@ -102,15 +122,36 @@
             <img src="dfbba08b4d74a1c067f1.png" alt="" class="elements__picture">
             <div class="elements__wrapper">
                 <p class="elements__name"></p>
-                <button class="elements__like" type="button"></button>
+                <div class="elements__like-wrapper">
+                    <button class="elements__like" type="button"></button>
+                    <span class="elements__like-count"></span>
+                </div>
+                
             </div>
         </li>
     </template>
-    
-    <!-- <script src="./scripts/cards.js"></script> -->
-    <!-- <script src="./scripts/validate.js"></script> -->
-    <!-- <script type="module" src="./scripts/index.js"></script> -->
-    
+
+    <!-- popup edit avatar -->
+
+    <div class="popup popup_avatar">
+        <div class="popup__container">
+            <button class="popup__close" type="button"></button>
+            <h2 class="popup__title">Обновить аватар</h2>
+
+            <form class="popup__form" novalidate>
+                <input type="url" id="popup__picture-link" name="picture-link" class="popup__picture-link popup__input" value=""
+                    placeholder="Avatar link" required>
+
+                <div class="popup__input-error-wrapper">
+                    <span class="popup__picture-link-error popup__input-error"></span>
+                </div>
+
+                <button type="submit" class="popup__button" disabled id="popup__avatar-save-button">Сохранить</button>
+            </form>
+
+        </div>
+    </div>
+
 </body>
 
 </html>
