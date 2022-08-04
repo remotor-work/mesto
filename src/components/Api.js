@@ -3,22 +3,27 @@ class Api {
         this._headers = headers
         this._baseUrl = baseUrl
     }
+
+    _getResponseData(res) {
+        return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
+    }
     
     getProfile() {
         
         return fetch(`https://${this._baseUrl}/users/me`, {
             headers: this._headers
         })
-        .then(res => res.ok ? res.json() : Promise.reject(res.status))
+        .then(this._getResponseData)
         .catch(console.log)
-        
+        // .then(res => res.ok ? res.json() : Promise.reject(res.status))
+        // .catch(console.log)
     }
 
     getInitialCards() {
         return fetch(`https://mesto.${this._baseUrl}/cards`, {
             headers: this._headers
         })
-        .then(res => res.ok ? res.json() : Promise.reject(res.status))
+        .then(this._getResponseData)
         .catch(console.log)
     }
 
@@ -31,7 +36,7 @@ class Api {
                 about
               })
         })
-        .then(res => res.ok ? res.json() : Promise.reject(res.status))
+        .then(this._getResponseData)
         .catch(console.log)
     }
 
@@ -44,7 +49,7 @@ class Api {
                 link
               })
         })
-        .then(res => res.ok ? res.json() : Promise.reject(res.status))
+        .then(this._getResponseData)
         .catch(console.log)
     }
 
@@ -54,7 +59,7 @@ class Api {
             method: 'DELETE',
             headers: this._headers
         })
-        .then(res => res.ok ? res.json() : Promise.reject(res.status))
+        .then(this._getResponseData)
         .catch(console.log)
     }
 
@@ -63,7 +68,7 @@ class Api {
             method: 'DELETE',
             headers: this._headers
         })
-        .then(res => res.ok ? res.json() : Promise.reject(res.status))
+        .then(this._getResponseData)
         .catch(console.log)
     }
   
@@ -72,7 +77,7 @@ class Api {
             method: 'PUT',
             headers: this._headers
         })
-        .then(res => res.ok ? res.json() : Promise.reject(res.status))
+        .then(this._getResponseData)
         .catch(console.log)
     }
 
@@ -82,7 +87,7 @@ class Api {
             headers: this._headers,
             body: JSON.stringify({ avatar })
         })
-        .then(res => res.ok ? res.json() : Promise.reject(res.status))
+        .then(this._getResponseData)
         .catch(console.log)
     }
   }

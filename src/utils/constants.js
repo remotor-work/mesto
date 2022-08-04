@@ -6,6 +6,8 @@ export const popupProfile = document.querySelector(".popup_profile");
 export const popupProfileForm = popupProfile.querySelector(".popup__form");
 export const popupProfileName = popupProfile.querySelector("#popup__profile-name");
 export const popupProfileJob = popupProfile.querySelector(".popup__job");
+export const popupProfileSaveButton = document.querySelector("#popup_profile__save-button");
+export const popupMestoSaveButton = document.querySelector("#popup__mesto-save-button");
 
 // Элементы попап добовления мест
 export const popupMesto = document.querySelector(".popup_mesto");
