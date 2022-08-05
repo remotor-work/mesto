@@ -1,5 +1,4 @@
 import "./index.css"; // добавьте импорт главного файла стилей !!!!for webpack
-//import { initialCards } from "../utils/cards.js";
 
 import { FormValidator } from "../components/FormValidator.js";
 import { Card } from "../components/Card.js";
@@ -15,9 +14,10 @@ import {
   popupProfileSaveButton,
   popupMestoSaveButton,
   popupMestoForm,
+  popupAvatarSaveButton,
+  popupPictureLink,
   profileEditButton,
   profileAddPopupButton,
-  cardsContainer,
   validationConfig,
   profileEditAvatar,
 } from "../utils/constants.js";
@@ -50,21 +50,6 @@ api
       });
       section.addItem(cardElement);
     }
-
-    //--------making reverse
-    // no reverse old code
-    // cardList.forEach((data) => {
-    //     const cardElement = createCard({
-    //       name: data.name,
-    //       link: data.link,
-    //       likes: data.likes,
-    //       id: data._id,
-    //       userId: userId,
-    //       ownerId: data.owner._id,
-    //     });
-    //     section.addItem(cardElement);
-    //   });
-
   })
   .catch(console.log);
 
@@ -74,22 +59,18 @@ const profileValidator = new FormValidator(validationConfig, popupProfileForm); 
 
 profileValidator.enableValidation(); // Вызов метода валидации форм
 
-
-
 // Обработчик submit редактирования профиля +
 function handlerSubmitProfileForm(data) {
   popupProfileSaveButton.textContent = "Сохранение...";
-
   const { name, job } = data;
   api
     .editProfile(name, job)
     .then(() => {
       userInfo.setUserInfo(name, job);
       popupEditCard.close();
-      document.querySelector("#popup_profile__save-button").textContent =
-        "Сохранить";
     })
-    .catch(console.log);
+    .catch(console.log)
+    .finally(() => popupProfileSaveButton.textContent = "Сохранить");
 }
 
 const popupEditCard = new PopupWithForm(
@@ -108,8 +89,6 @@ profileEditButton.addEventListener("click", function () {
 
 popupEditCard.setEventListeners();
 
-//-----------редактирования профиля END---------------//
-
 //-----------добавление место START---------------//
 
 //Cоздание экземпляра класса валидации форм
@@ -117,8 +96,6 @@ const cardValidator = new FormValidator(validationConfig, popupMestoForm);
 
 // Вызов метода валидации форм
 cardValidator.enableValidation();
-
-
 
 // Обрабочик submit добавление место (+)
 const handlerSubmitAddMestoForm = (data) => {
@@ -136,10 +113,9 @@ const handlerSubmitAddMestoForm = (data) => {
       });
       section.addItem(cardElement);
       popupAddCard.close();
-      document.querySelector("#popup__mesto-save-button").textContent =
-        "Создать";
     })
-    .catch(console.log);
+    .catch(console.log)
+    .finally(() => popupMestoSaveButton.textContent = "Создать");
 };
 
 // Отрисовка карточек
@@ -236,7 +212,9 @@ const popupAvatar = new PopupWithForm(".popup_avatar", handlerSubmitAvatarForm);
 profileEditAvatar.addEventListener("click", function () {
   //Слушатель кнопки редактирования avatar
   const { name, job, avatar } = userInfo.getUserInfo();
-  const popupProfileAvatar = document.querySelector(".popup__picture-link");
+
+
+  const popupProfileAvatar = popupPictureLink;
   popupProfileAvatar.value = avatar;
 
   popupAvatar.open();
@@ -245,17 +223,15 @@ profileEditAvatar.addEventListener("click", function () {
 function handlerSubmitAvatarForm(data) {
   // Обработчик submit
   const avatar = data["picture-link"];
-  document.querySelector("#popup__avatar-save-button").textContent =
-    "Сохранение...";
+  popupAvatarSaveButton.textContent = "Сохранение...";
   api
     .updateAvatar(avatar)
     .then((res) => {
       userInfo.setUserInfo("", "", avatar);
       popupAvatar.close();
-      document.querySelector("#popup__avatar-save-button").textContent =
-        "Сохранить";
     })
-    .catch(console.log);
+    .catch(console.log)
+    .finally(() => popupAvatarSaveButton.textContent = "Сохранить");
 }
 
 popupAvatar.setEventListeners();

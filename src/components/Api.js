@@ -14,9 +14,6 @@ class Api {
             headers: this._headers
         })
         .then(this._getResponseData)
-        // .catch(console.log)
-        // .then(res => res.ok ? res.json() : Promise.reject(res.status))
-        // .catch(console.log)
     }
 
     getInitialCards() {
@@ -24,7 +21,6 @@ class Api {
             headers: this._headers
         })
         .then(this._getResponseData)
-        // .catch(console.log)
     }
 
     editProfile(name, about) {
@@ -37,7 +33,6 @@ class Api {
               })
         })
         .then(this._getResponseData)
-        // .catch(console.log)
     }
 
     addCard(name, link) {
@@ -50,7 +45,6 @@ class Api {
               })
         })
         .then(this._getResponseData)
-        // .catch(console.log)
     }
 
 
@@ -60,7 +54,6 @@ class Api {
             headers: this._headers
         })
         .then(this._getResponseData)
-        // .catch(console.log)
     }
 
     deleteLike(id) {
@@ -69,7 +62,6 @@ class Api {
             headers: this._headers
         })
         .then(this._getResponseData)
-        // .catch(console.log)
     }
   
     addLike(id) {
@@ -78,7 +70,6 @@ class Api {
             headers: this._headers
         })
         .then(this._getResponseData)
-        // .catch(console.log)
     }
 
     updateAvatar(avatar, id) {
@@ -88,7 +79,6 @@ class Api {
             body: JSON.stringify({ avatar })
         })
         .then(this._getResponseData)
-        // .catch(console.log)
     }
   }
   
